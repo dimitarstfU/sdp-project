@@ -18,6 +18,7 @@ public class Main
             cities.add(new City(cityNames[i]));
         }
         int skips = scanner.nextInt();
+        scanner.nextLine();
         for(int i=0;i<skips;i++)
         {
             line = scanner.nextLine();
@@ -32,30 +33,35 @@ public class Main
                     }    
                 }
             }
-        }   
+        }
         line = scanner.nextLine();
+        scanner.close();
+
         cityNames = line.split(" ");
         targets.add(cities.getFirst());
-        for(int i =0;i<cityNames.length;i++)
+        for(int i=0; i<cityNames.length; i++)
         {
             for (City city : cities)
             {
                 if (city.getName().equals(cityNames[i]))
                 {
-                    targets.add(new City(cityNames[i]));
+                    targets.add(city);
                     break;
                 }
             }
         }
         targets.add(cities.getLast());
 
-        List<City> path;
+        List<City> path = new ArrayList<>();
 
-        for(int i=0;i<targets.size()-1;i++)
+        for(int i=0; i < targets.size() - 1; i++)
         {
-            shortestPath(targets.get(i), targets.get(i+1), path);
+            City.shortestPath(targets.get(i), targets.get(i+1), path);
         }
-        scanner.close();
-        
+
+        for (City city : path)
+        {
+            System.out.print(city.getName() + " ");
+        }
     }
 }
